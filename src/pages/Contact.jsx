@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import emailjs from '@emailjs/browser'
 import './Contact.css'
 
 const Contact = () => {
@@ -8,25 +9,90 @@ const Contact = () => {
     subject: '',
     message: ''
   })
+  const [isLoading, setIsLoading] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState({ type: '', message: '' })
+
+  // EmailJS Configuration
+  // Get these from .env file
+  const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID
+  const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+  const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
     })
+    // Clear status message when user starts typing
+    if (submitStatus.message) {
+      setSubmitStatus({ type: '', message: '' })
+    }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Handle form submission here
-    console.log('Form submitted:', formData)
-    alert('Thank you for your message! I will get back to you soon.')
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    })
+    
+    // Check if EmailJS is configured
+    if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY ||
+        EMAILJS_SERVICE_ID === 'your_service_id_here' || 
+        EMAILJS_TEMPLATE_ID === 'your_template_id_here' || 
+        EMAILJS_PUBLIC_KEY === 'your_public_key_here') {
+      setSubmitStatus({
+        type: 'error',
+        message: 'Email service is not configured yet. Please contact me directly at emmhandelrosario@gmail.com or check the EMAILJS_SETUP.md file for setup instructions.'
+      })
+      return
+    }
+
+    setIsLoading(true)
+    setSubmitStatus({ type: '', message: '' })
+
+    try {
+      // Send email using EmailJS
+      const result = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'emmhandelrosario@gmail.com' // Your email address
+        },
+        EMAILJS_PUBLIC_KEY
+      )
+
+      if (result.text === 'OK') {
+        setSubmitStatus({
+          type: 'success',
+          message: 'Thank you for your message! I will get back to you soon.'
+        })
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        })
+      }
+    } catch (error) {
+      console.error('EmailJS Error:', error)
+      let errorMessage = 'Sorry, there was an error sending your message. '
+      
+      if (error.text) {
+        errorMessage += `Error: ${error.text}. `
+      } else if (error.message) {
+        errorMessage += `Error: ${error.message}. `
+      }
+      
+      errorMessage += 'Please try again or contact me directly at emmhandelrosario@gmail.com'
+      
+      setSubmitStatus({
+        type: 'error',
+        message: errorMessage
+      })
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -68,14 +134,14 @@ const Contact = () => {
               <div className="info-icon">📧</div>
               <div>
                 <h3>Email</h3>
-                <p>your.email@example.com</p>
+                <p>emmhandelrosario@gmail.com</p>
               </div>
             </div>
             <div className="info-item">
               <div className="info-icon">📱</div>
               <div>
                 <h3>Phone</h3>
-                <p>+63 XXX XXX XXXX</p>
+                <p>+63 927 357 0485</p>
               </div>
             </div>
             <div className="info-item">
@@ -88,14 +154,17 @@ const Contact = () => {
             <div className="social-links">
               <h3>Connect with me</h3>
               <div className="social-icons">
-                <a href="#" className="social-link" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/in/emmhan-russell-d-bantolin-0bba412aa/" className="social-link" aria-label="LinkedIn">
                   LinkedIn
                 </a>
-                <a href="#" className="social-link" aria-label="GitHub">
+                <a href="https://github.com/NobuTheHorse" className="social-link" aria-label="GitHub">
                   GitHub
                 </a>
-                <a href="#" className="social-link" aria-label="Facebook">
+                <a href="https://www.facebook.com/Emmmhaannnnnn" className="social-link" aria-label="Facebook">
                   Facebook
+                </a>
+                <a href="https://www.instagram.com/emmhnjajsjr/" className="social-link" aria-label="Instagram">
+                  Instagram
                 </a>
               </div>
             </div>
@@ -150,8 +219,17 @@ const Contact = () => {
                 placeholder="Your message here..."
               ></textarea>
             </div>
-            <button type="submit" className="btn-submit">
-              Send Message
+            {submitStatus.message && (
+              <div className={`submit-status ${submitStatus.type}`}>
+                {submitStatus.message}
+              </div>
+            )}
+            <button 
+              type="submit" 
+              className="btn-submit"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>

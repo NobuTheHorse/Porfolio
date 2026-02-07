@@ -100,7 +100,7 @@ const Home = () => {
       <section className="hero-section">
         <div className="hero-content">
           <h1 className="hero-title">
-            Sup, I'm <span className="name-highlight">Your Name</span>.
+            Hello, I'm <span className="name-highlight">Emmhan!</span>
           </h1>
           <h2 className="hero-subtitle">
             {typedText}
@@ -114,7 +114,7 @@ const Home = () => {
 
       <section className="selected-work-section">
         <div className="section-header">
-          <h2 className="section-title">Selected work</h2>
+          <h2 className="section-title">Selected projects</h2>
           <span className="work-count">({selectedWork.length})</span>
         </div>
         <div className="work-grid">

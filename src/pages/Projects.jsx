@@ -144,9 +144,9 @@ const Projects = () => {
       </div>
       <div className="projects-container">
         <div className="projects-header">
-          <h1 className="page-title">Work</h1>
+          <h1 className="page-title">Projects</h1>
           <p className="page-subtitle">
-            A collection of projects I've worked on during my studies and internship.
+            A collection of projects I've worked on during my studies.
           </p>
         </div>
 
