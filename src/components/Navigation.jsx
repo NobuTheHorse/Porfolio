@@ -27,18 +27,18 @@ const Navigation = () => {
             Home
           </Link>
           <Link
+            to="/projects"
+            className={`nav-link ${isActive('/projects') ? 'active' : ''}`}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Project
+          </Link>
+          <Link
             to="/about"
             className={`nav-link ${isActive('/about') ? 'active' : ''}`}
             onClick={() => setIsMenuOpen(false)}
           >
             About
-          </Link>
-          <Link
-            to="/projects"
-            className={`nav-link ${isActive('/projects') ? 'active' : ''}`}
-            onClick={() => setIsMenuOpen(false)}
-          >
-            Projects
           </Link>
           <Link
             to="/contact"
