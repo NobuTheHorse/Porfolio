@@ -1,0 +1,124 @@
+.about {
+  flex: 1;
+  padding: 4rem 0;
+  background-color: var(--bg-white);
+}
+
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.page-title {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: var(--text-dark);
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-image {
+  display: flex;
+  justify-content: center;
+}
+
+.profile-picture {
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.about-text h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--text-dark);
+}
+
+.about-text p {
+  font-size: 1.1rem;
+  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.education-section,
+.interests-section {
+  margin-top: 2.5rem;
+}
+
+.education-section h3,
+.interests-section h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text-dark);
+}
+
+.education-item {
+  background-color: var(--bg-light);
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--primary-color);
+}
+
+.education-item h4 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+.education-item p {
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.education-status {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.interests-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.interests-list li {
+  background-color: var(--bg-light);
+  padding: 1rem;
+  border-radius: 8px;
+  color: var(--text-dark);
+  font-weight: 500;
+  border-left: 3px solid var(--primary-color);
+}
+
+@media screen and (max-width: 968px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .profile-picture {
+    width: 200px;
+    height: 200px;
+    font-size: 5rem;
+  }
+
+  .page-title {
+    font-size: 2rem;
+  }
+}
+
